@@ -6,7 +6,7 @@ module Vocabulary
 
     def usage_count context, meta_key_definition, meta_term, user
       MediaEntry.accessible_by_user(user,:view) 
-        .joins(meta_data_meta_terms: {meta_terms: {meta_keys: :contexts}}) 
+        .joins(meta_data_meta_terms: {meta_terms: {meta_key_definition: :context}}) 
         .where("meta_key_definitions.id = ?", meta_key_definition.id) 
         .where("meta_terms.id = ?",meta_term.id) 
         .where("contexts.id= ?",context.id) 
@@ -19,10 +19,8 @@ module Vocabulary
         .joins(:meta_key).where("meta_datum_object_type = 'MetaDatumMetaTerms'")
         .order(:label).map{ |mkd|
           mkd.attributes.merge(
-            meta_key_meta_terms_alphabetical_order: \
-              MetaKey.find_by(id: mkd.meta_key_id).meta_terms_alphabetical_order,
-            meta_terms: MetaTerm.joins(meta_keys: :meta_key_definitions) 
-              .where("meta_key_definitions.id = ?",mkd.id)
+            meta_key_defintion_meta_terms_alphabetical_order: mkd.meta_terms.reorder(:term,:position,:id),
+            meta_terms: MetaTerm.where("meta_key_definition_id = ?",mkd.id)
               .order(:term).map{ |mt| 
                 mt.attributes.symbolize_keys
                   .merge(usage_count: usage_count(context,mkd,mt,user))})}
@@ -36,11 +34,9 @@ module Vocabulary
         .joins(:meta_key).where("meta_datum_object_type = 'MetaDatumMetaTerms'")
         .order(:label).map{ |mkd|
           mkd.attributes.merge(
-            meta_key_meta_terms_alphabetical_order: \
-              MetaKey.find_by(id: mkd.meta_key_id).meta_terms_alphabetical_order,
-            meta_terms: MetaTerm.joins(meta_keys: :meta_key_definitions) 
-              .where("meta_terms.id in ( #{meta_terms_for_set(set).select('meta_terms.id').to_sql} )")
-              .where("meta_key_definitions.id = ?",mkd.id)
+            meta_key_defintion_meta_terms_alphabetical_order: mkd.meta_terms.reorder(:term,:position,:id),
+            meta_terms: MetaTerm.where(meta_key_definition: mkd)
+              .where("meta_terms.id in ( #{meta_terms_for_set(set).select('meta_terms.id').reorder(:id).to_sql} )")
               .order(:term).map{ |mt| 
                 mt.attributes.symbolize_keys
                   .merge(usage_count: usage_count(context,mkd,mt,user))})}

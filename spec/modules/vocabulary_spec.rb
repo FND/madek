@@ -35,7 +35,14 @@ describe ::Vocabulary do
 
       end
 
+      describe "selecting ids" do
+        it "should not raise an error" do
 
+          expect(::Vocabulary.meta_terms_for_set(@set_for_contex_character) \
+                 .select('meta_terms.id').reorder(:id).map(&:id)
+                ).not_to raise_error
+        end
+      end
 
     end
 

@@ -1349,6 +1349,13 @@ CREATE UNIQUE INDEX index_meta_terms_on_meta_key_definition_id_and_term ON meta_
 
 
 --
+-- Name: index_meta_terms_on_position; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_meta_terms_on_position ON meta_terms USING btree ("position");
+
+
+--
 -- Name: index_people_on_first_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -2117,6 +2124,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140623075458');
 INSERT INTO schema_migrations (version) VALUES ('20140709085016');
 
 INSERT INTO schema_migrations (version) VALUES ('20140715053656');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715113300');
 
 INSERT INTO schema_migrations (version) VALUES ('21');
 

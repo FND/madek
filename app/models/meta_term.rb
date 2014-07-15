@@ -8,6 +8,8 @@ class MetaTerm < ActiveRecord::Base
     foreign_key: :meta_term_id, 
     association_foreign_key: :meta_datum_id
 
+  default_scope lambda{order(:position,:term,:id)}
+
   scope :with_meta_data, lambda{where(%Q<
     "meta_terms"."id" in (#{joins(:meta_data).select('"meta_terms"."id"') \
                                       .group('"meta_terms"."id"').to_sql}) >)}
