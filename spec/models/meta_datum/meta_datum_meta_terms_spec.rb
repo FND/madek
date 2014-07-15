@@ -22,8 +22,9 @@ describe MetaDatumMetaTerms do
 
     before :each do
       @mdd = FactoryGirl.create :meta_datum_meta_terms
-      @meta_term1 = FactoryGirl.create :meta_term
-      @meta_term2 = FactoryGirl.create :meta_term
+      mkd = FactoryGirl.create :meta_key_definition
+      @meta_term1 = FactoryGirl.create :meta_term, meta_key_definition: mkd
+      @meta_term2 = FactoryGirl.create :meta_term, meta_key_definition: mkd
     end
 
     it "should be possible to add a term w.o. error" do
