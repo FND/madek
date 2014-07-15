@@ -9,6 +9,7 @@ class MetaKeyDefinition < ActiveRecord::Base
 
   belongs_to    :context, foreign_key: :context_id
   belongs_to    :meta_key
+  has_many  :meta_terms
 
   default_scope lambda{order("meta_key_definitions.position ASC")}
 

@@ -17,24 +17,30 @@ module MetaContextTermTestFactory
     #
     ##########################################################################
 
+    @context_color= Context.create id: :color, label: :Color
+    ContextGroup.find_by(name: "Kontexte").contexts << @context_color
+
+
     @meta_key_colors= MetaKey.find_or_create_by \
       meta_datum_object_type: :MetaDatumMetaTerms,
       id: :colors
-
-    @meta_key_colors.meta_terms <<  MetaTerm.find_or_create_by(term: :Red)
-    @meta_key_colors.meta_terms <<  MetaTerm.find_or_create_by(term: :Blue)
-    @meta_key_colors.meta_terms <<  MetaTerm.find_or_create_by(term: :Yellow)
-
-    @context_color= Context.create id: :color, label: :Color
-    ContextGroup.find_by(name: "Kontexte").contexts << @context_color
 
     meta_key_definition_fg_colors= MetaKeyDefinition.find_or_create_by \
       context_id: @context_color.id,  meta_key_id: @meta_key_colors, 
       label: "Foreground Colors"
 
+    MetaTerm.find_or_create_by(term: :Red, meta_key_definition_id: meta_key_definition_fg_colors)
+    MetaTerm.find_or_create_by(term: :Blue, meta_key_definition_id: meta_key_definition_fg_colors)
+    MetaTerm.find_or_create_by(term: :Yellow, meta_key_definition_id: meta_key_definition_fg_colors)
+
+
     meta_key_definition_bg_colors= MetaKeyDefinition.find_or_create_by \
       context_id: @context_color.id,  meta_key_id: @meta_key_colors, 
       label: "Background Colors"
+
+    MetaTerm.find_or_create_by(term: :Red, meta_key_definition_id: meta_key_definition_bg_colors)
+    MetaTerm.find_or_create_by(term: :Blue, meta_key_definition_id: meta_key_definition_bg_colors)
+    MetaTerm.find_or_create_by(term: :Yellow, meta_key_definition_id: meta_key_definition_bg_colors)
 
 
 
@@ -44,35 +50,34 @@ module MetaContextTermTestFactory
     # a term that is shared between the two keys
     #
     ##########################################################################
-
+     
+    @context_character= Context.create id: :character, label: :Character
+    ContextGroup.find_by(name: "Kontexte").contexts << @context_character 
 
     @meta_key_goddess= MetaKey.find_or_create_by! \
       meta_datum_object_type: 'MetaDatumMetaTerms',
       id: :goddess 
 
-    @meta_term_nike= MetaTerm.find_or_create_by(term: "Nike")
-    @meta_term_athena= MetaTerm.find_or_create_by(term: "Athena")
+    @meta_key_definition_goddess= MetaKeyDefinition.find_or_create_by \
+      context_id: @context_character.id,  meta_key_id: @meta_key_goddess, 
+      label: "Goddess"
 
-    @meta_key_goddess.meta_terms << @meta_term_nike
-    @meta_key_goddess.meta_terms << @meta_term_athena
+    @meta_term_nike= MetaTerm.find_or_create_by(term: "Nike", meta_key_definition: @meta_key_definition_goddess)
+    @meta_term_athena= MetaTerm.find_or_create_by(term: "Athena",meta_key_definition: @meta_key_definition_goddess)
+
+
+    @meta_key_definition_sponsor = MetaKeyDefinition.find_or_create_by \
+      context_id: @context_character.id,  meta_key_id: @meta_key_corporate_sponsor, 
+      label: "Corporate Sponsor"
+
 
     @meta_key_corporate_sponsor= MetaKey.find_or_create_by \
       meta_datum_object_type: 'MetaDatumMetaTerms',
       id: :corporate_sponsor
-    @meta_key_corporate_sponsor.meta_terms << MetaTerm.find_or_create_by(term: "Nike")
-    @meta_key_corporate_sponsor.meta_terms << MetaTerm.find_or_create_by(term: "Swatch")
 
+    MetaTerm.find_or_create_by(term: "Nike", meta_key_definition: @meta_key_definition_sponsor)
+    MetaTerm.find_or_create_by(term: "Swatch", meta_key_definition: @meta_key_definition_sponsor)
 
-    @context_character= Context.create id: :character, label: :Character
-    ContextGroup.find_by(name: "Kontexte").contexts << @context_character 
-
-    MetaKeyDefinition.find_or_create_by \
-      context_id: @context_character.id,  meta_key_id: @meta_key_goddess, 
-      label: "Goddess"
-
-    MetaKeyDefinition.find_or_create_by \
-      context_id: @context_character.id,  meta_key_id: @meta_key_corporate_sponsor, 
-      label: "Corporate Sponsor"
 
   end
 

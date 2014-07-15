@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class MetaTerm < ActiveRecord::Base
-  has_many :meta_key_definitions
+  belongs_to :meta_key_definition
   has_many :meta_keys, :through => :meta_key_definitions
 
   has_and_belongs_to_many :meta_data,
@@ -22,8 +22,6 @@ class MetaTerm < ActiveRecord::Base
   scope :not_used, lambda{where(%Q<
     NOT EXISTS (SELECT NULL FROM "meta_data_meta_terms" 
       WHERE "meta_terms"."id" = "meta_data_meta_terms"."meta_term_id")>)}
-
-  after_create :set_position
 
   def to_s
     term
@@ -74,15 +72,5 @@ class MetaTerm < ActiveRecord::Base
     select("#{'meta_terms.*,' if select_values.empty?} #{rank} AS search_rank") \
       .where("#{rank} > 0.05") \
       .reorder("search_rank DESC") }
-
-  private
-
-  def set_position
-    ActiveRecord::Base.transaction do
-      meta_keys.each do |meta_key|
-        meta_key.sort_meta_terms
-      end
-    end
-  end
 
 end
