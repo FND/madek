@@ -22,19 +22,8 @@ class MetaDatumMetaTerms < MetaDatum
         v
       elsif UUID_V4_REGEXP.match v 
         MetaTerm.find_by id: v
-      elsif meta_key.is_extensible_list?
-        term = MetaTerm.find_or_initialize_by term: v
-        meta_key.meta_terms << term unless meta_key.meta_terms.include?(term)
-        term
-      elsif v.is_a?(String) # the meta_key is not extensible list
-        # WTF
-        r = meta_key.meta_terms.find_by term: v
-        r ||= v.split(SEPARATOR).map do |term| # reconvert string to array, in case reimporting previously exported media_resources
-          meta_key.meta_terms.find_or_initialize_by term: term
-        end
-        r
       else
-        v
+        raise "Unsupported Value" 
       end
     end
     
