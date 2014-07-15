@@ -449,24 +449,16 @@ CREATE TABLE meta_keys (
 
 
 --
--- Name: meta_keys_meta_terms; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE meta_keys_meta_terms (
-    "position" integer DEFAULT 0 NOT NULL,
-    meta_key_id character varying(255),
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    meta_term_id uuid
-);
-
-
---
 -- Name: meta_terms; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE meta_terms (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    term text DEFAULT ''::text NOT NULL
+    term text DEFAULT ''::text NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    meta_key_definition_id uuid NOT NULL,
+    "position" integer DEFAULT 0
 );
 
 
@@ -784,14 +776,6 @@ ALTER TABLE ONLY meta_data
 
 ALTER TABLE ONLY meta_key_definitions
     ADD CONSTRAINT meta_key_definitions_pkey PRIMARY KEY (id);
-
-
---
--- Name: meta_keys_meta_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY meta_keys_meta_terms
-    ADD CONSTRAINT meta_keys_meta_terms_pkey PRIMARY KEY (id);
 
 
 --
@@ -1344,27 +1328,6 @@ CREATE INDEX index_meta_key_definitions_on_meta_key_id ON meta_key_definitions U
 
 
 --
--- Name: index_meta_keys_meta_terms_on_meta_key_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_meta_keys_meta_terms_on_meta_key_id ON meta_keys_meta_terms USING btree (meta_key_id);
-
-
---
--- Name: index_meta_keys_meta_terms_on_meta_key_id_and_meta_term_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_meta_keys_meta_terms_on_meta_key_id_and_meta_term_id ON meta_keys_meta_terms USING btree (meta_key_id, meta_term_id);
-
-
---
--- Name: index_meta_keys_meta_terms_on_position; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_meta_keys_meta_terms_on_position ON meta_keys_meta_terms USING btree ("position");
-
-
---
 -- Name: index_meta_keys_on_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1372,10 +1335,17 @@ CREATE UNIQUE INDEX index_meta_keys_on_id ON meta_keys USING btree (id);
 
 
 --
--- Name: index_meta_terms_on_term; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_meta_terms_on_meta_key_definition_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE UNIQUE INDEX index_meta_terms_on_term ON meta_terms USING btree (term);
+CREATE INDEX index_meta_terms_on_meta_key_definition_id ON meta_terms USING btree (meta_key_definition_id);
+
+
+--
+-- Name: index_meta_terms_on_meta_key_definition_id_and_term; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_meta_terms_on_meta_key_definition_id_and_term ON meta_terms USING btree (meta_key_definition_id, term);
 
 
 --
@@ -1929,19 +1899,11 @@ ALTER TABLE ONLY meta_key_definitions
 
 
 --
--- Name: meta_keys_meta_terms_meta_key_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: meta_terms_meta_key_definition_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY meta_keys_meta_terms
-    ADD CONSTRAINT meta_keys_meta_terms_meta_key_id_fk FOREIGN KEY (meta_key_id) REFERENCES meta_keys(id) ON DELETE CASCADE;
-
-
---
--- Name: meta_keys_meta_terms_meta_term_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY meta_keys_meta_terms
-    ADD CONSTRAINT meta_keys_meta_terms_meta_term_id_fk FOREIGN KEY (meta_term_id) REFERENCES meta_terms(id) ON DELETE CASCADE;
+ALTER TABLE ONLY meta_terms
+    ADD CONSTRAINT meta_terms_meta_key_definition_id_fk FOREIGN KEY (meta_key_definition_id) REFERENCES meta_key_definitions(id) ON DELETE CASCADE;
 
 
 --
@@ -2153,6 +2115,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140613154055');
 INSERT INTO schema_migrations (version) VALUES ('20140623075458');
 
 INSERT INTO schema_migrations (version) VALUES ('20140709085016');
+
+INSERT INTO schema_migrations (version) VALUES ('20140715053656');
 
 INSERT INTO schema_migrations (version) VALUES ('21');
 

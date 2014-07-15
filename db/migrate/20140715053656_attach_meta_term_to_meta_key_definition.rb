@@ -35,7 +35,7 @@ class AttachMetaTermToMetaKeyDefinition < ActiveRecord::Migration
       t.integer :position, default: 0, nil: false
     end
     remove_index :meta_terms, :term 
-    add_foreign_key :meta_terms, :meta_key_definitions, dependent: :destroy
+    add_foreign_key :meta_terms, :meta_key_definitions, dependent: :delete
 
 
     # use the non existing created_at column to differentiate between 
@@ -63,13 +63,13 @@ class AttachMetaTermToMetaKeyDefinition < ActiveRecord::Migration
       end
     end
 
+    MetaTerm.where("meta_key_definition_id is NULL").destroy_all
     drop_table :meta_keys_meta_terms
 
-    MetaTerm.where("meta_key_definition_id is NULL").destroy_all
+    change_column :meta_terms, :meta_key_definition_id, :uuid, null: false
 
-    add_index :meta_terms, [:term, :meta_key_definition_id], unique: true
-
-    raise 'not yet'
+    add_index :meta_terms, :meta_key_definition_id
+    add_index :meta_terms, [:meta_key_definition_id,:term], unique: true
   end
 
   def down
