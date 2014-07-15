@@ -14,6 +14,31 @@ describe ::Vocabulary do
       build_vocabulary_example_media_resources @user
     end
 
+
+    describe "meta_terms_for_set" do
+
+      it "should not raise an error" do
+        expect(::Vocabulary.meta_terms_for_set @set_for_contex_character)\
+          .not_to raise_error
+      end
+
+      describe "@meta_terms_for_set_for_contex_character" do
+        before :each do
+          @meta_terms_for_set_for_contex_character = ::Vocabulary.meta_terms_for_set @set_for_contex_character
+        end
+
+        it "should exactly include Nike and Athena" do 
+          @meta_terms_for_set_for_contex_character.should include(@meta_term_nike)
+          @meta_terms_for_set_for_contex_character.should include(@meta_term_athena)
+          @meta_terms_for_set_for_contex_character.count.should be== 2
+        end
+
+      end
+
+
+
+    end
+
     describe "getting the included (individual) media_entries" do
 
       it "should not raise an error" do
