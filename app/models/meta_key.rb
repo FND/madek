@@ -19,8 +19,7 @@ class MetaKey < ActiveRecord::Base
   end
   has_many :contexts, through: :meta_key_definitions
 
-  has_many :meta_key_meta_terms, dependent: :destroy
-  has_many :meta_terms, ->{order("meta_keys_meta_terms.position ASC")}, through: :meta_key_meta_terms
+  has_many :meta_terms, ->{order("meta_terms.position ASC")}, through: :meta_key_definitions
   accepts_nested_attributes_for :meta_terms, reject_if: proc { |attributes| attributes[:term].blank? }
 
   scope :with_meta_data, lambda{joins(:meta_data).group(:id)}
@@ -75,7 +74,7 @@ class MetaKey < ActiveRecord::Base
   end
 
   def used?
-    !meta_key_definitions.empty? || !meta_data.empty? || !meta_key_meta_terms.empty?
+    !meta_key_definitions.empty? || !meta_data.empty? 
   end
 
 ########################################################

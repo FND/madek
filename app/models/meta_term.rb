@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class MetaTerm < ActiveRecord::Base
-  has_many :meta_key_meta_terms, :foreign_key => :meta_term_id
-  has_many :meta_keys, :through => :meta_key_meta_terms
+  has_many :meta_key_definitions
+  has_many :meta_keys, :through => :meta_key_definitions
 
   has_and_belongs_to_many :meta_data,
     join_table: :meta_data_meta_terms, 
@@ -17,16 +17,11 @@ class MetaTerm < ActiveRecord::Base
     operator  = are_used ? 'OR'     : 'AND'
     where(%Q<
       #{condition} (SELECT NULL FROM "meta_data_meta_terms" 
-                      WHERE "meta_terms"."id" = "meta_data_meta_terms"."meta_term_id") 
-      #{operator}
-      #{condition} (SELECT NULL FROM "meta_keys_meta_terms" 
-          WHERE "meta_terms"."id" = "meta_keys_meta_terms"."meta_term_id") >) }
+                      WHERE "meta_terms"."id" = "meta_data_meta_terms"."meta_term_id")>)}
 
   scope :not_used, lambda{where(%Q<
     NOT EXISTS (SELECT NULL FROM "meta_data_meta_terms" 
-      WHERE "meta_terms"."id" = "meta_data_meta_terms"."meta_term_id") AND
-    NOT EXISTS (SELECT NULL FROM "meta_keys_meta_terms" 
-                      WHERE "meta_terms"."id" = "meta_keys_meta_terms"."meta_term_id") >)}
+      WHERE "meta_terms"."id" = "meta_data_meta_terms"."meta_term_id")>)}
 
   after_create :set_position
 
@@ -46,14 +41,12 @@ class MetaTerm < ActiveRecord::Base
   ######################################################
 
     def is_used?
-      meta_key_meta_terms.exists? or
       meta_data.exists?
     end
   
   ######################################################
 
     def used_times
-      meta_key_meta_terms.count +
       meta_data.count
     end
 

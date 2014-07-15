@@ -1,6 +1,17 @@
 class AttachMetaTermToMetaKeyDefinition < ActiveRecord::Migration
 
-  class MetaTerm < ActiveRecord::Base
+  class ::MetaKey < ActiveRecord::Base
+    has_many :meta_key_definitions, dependent: :destroy 
+    has_many :meta_key_meta_terms, dependent: :destroy
+    has_many :meta_terms, ->{order("meta_keys_meta_terms.position ASC")}, through: :meta_key_meta_terms
+    accepts_nested_attributes_for :meta_terms, reject_if: proc { |attributes| attributes[:term].blank? }
+  end
+
+  class ::MetaKeyDefinition < ActiveRecord::Base
+    belongs_to    :meta_key
+  end
+
+  class ::MetaTerm < ActiveRecord::Base
     has_many :meta_key_meta_terms, :foreign_key => :meta_term_id
 
     has_and_belongs_to_many :meta_data,
@@ -9,7 +20,7 @@ class AttachMetaTermToMetaKeyDefinition < ActiveRecord::Migration
       association_foreign_key: :meta_datum_id
   end
 
-  class MetaKeyMetaTerm < ActiveRecord::Base
+  class ::MetaKeyMetaTerm < ActiveRecord::Base
     self.table_name = 'meta_keys_meta_terms'
     belongs_to    :meta_key
     belongs_to    :meta_term, :class_name => "MetaTerm"
