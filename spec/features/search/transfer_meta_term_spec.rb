@@ -21,16 +21,9 @@ feature "Transferring resources between terms and searching for those terms."  d
       label: "The meta key for testing MetaKeyMetaTerms",
       meta_key: the_meta_key
 
-    meta_term_illwetritsch= MetaTerm.create! term: "Illwetritsch"
-    MetaKeyMetaTerm.create! \
-      meta_key: the_meta_key,
-      meta_term: meta_term_illwetritsch
+    meta_term_illwetritsch= MetaTerm.create! term: "Illwetritsch", meta_key_definition: mkd
 
-    meta_term_napdill= MetaTerm.create! term: "Napdill"
-    MetaKeyMetaTerm.create! \
-      meta_key: the_meta_key,
-      meta_term: meta_term_napdill
-
+    meta_term_napdill= MetaTerm.create! term: "Napdill", meta_key_definition: mkd
 
     # associate the media_entry with Illwetritsch
     mdmts= MetaDatumMetaTerms.create! media_resource: @media_entry, meta_key: the_meta_key
