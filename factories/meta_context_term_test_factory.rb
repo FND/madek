@@ -84,39 +84,54 @@ module MetaContextTermTestFactory
 
 
   def build_vocabulary_example_media_resources user= User.find_by_login(:adam)
+    
 
-    meta_key_title= MetaKey.find_by_id(:title) \
-      || FactoryGirl.create(:meta_key_title)
+    ActiveRecord::Base.transaction do 
 
-    @set_for_contex_character= MediaSet.create  user_id: user
-    @set_for_contex_character.individual_contexts << @context_character
-    @set_for_contex_character.meta_data.create \
-      meta_key: meta_key_title, value: "Character"
-    @set_for_contex_character.reindex
+      meta_key_title= MetaKey.find_by_id(:title) \
+        || FactoryGirl.create(:meta_key_title)
 
-    @set_for_color_context= MediaSet.create user_id: user 
-    @set_for_color_context.individual_contexts << @context_color
-    @set_for_color_context.meta_data.create \
-      meta_key: meta_key_title, value: "Color"
-    @set_for_color_context.reindex
+      @set_for_contex_character= MediaSet.create  user_id: user
+      @set_for_contex_character.individual_contexts << @context_character rescue nil
+      @set_for_contex_character.meta_data.create \
+        meta_key: meta_key_title, value: "Character"
+      @set_for_contex_character.reindex
 
-    @empty_character_entry = FactoryGirl.create :media_entry, user: @user
+      @set_for_color_context= MediaSet.create user_id: user 
+      @set_for_color_context.individual_contexts << @context_color rescue nil
+      @set_for_color_context.meta_data.create \
+        meta_key: meta_key_title, value: "Color"
+      @set_for_color_context.reindex
 
-    @nike_entry = FactoryGirl.create :media_entry, user: @user
-    @nike_goddess_meta_datum= MetaDatum.create! media_resource: @nike_entry, \
-      meta_key: @meta_key_goddess, type: 'MetaDatumMetaTerms'
-    @nike_goddess_meta_datum.meta_terms << @meta_term_nike
+      meta_key_title = MetaKey.find_by_id(:title) || FactoryGirl.create(:meta_key_title)
 
-    @athena_and_nike_entry = FactoryGirl.create :media_entry, user: @user
-    @athena_and_nike_goddess_meta_datum= MetaDatum.create! \
-      media_resource: @athena_and_nike_entry, meta_key: @meta_key_goddess, \
-      type: 'MetaDatumMetaTerms'
-    @athena_and_nike_goddess_meta_datum.meta_terms << @meta_term_nike
-    @athena_and_nike_goddess_meta_datum.meta_terms << @meta_term_athena
+      @empty_character_entry = FactoryGirl.create :media_entry_with_image_media_file, user: user
+      @empty_character_entry.meta_data.create meta_key: meta_key_title, value: "Without Character Terms"
+      @empty_character_entry.reindex
 
-    @set_for_contex_character.child_media_resources << @empty_character_entry
-    @set_for_contex_character.child_media_resources << @nike_entry
-    @set_for_contex_character.child_media_resources << @athena_and_nike_entry
+      @nike_entry = FactoryGirl.create :media_entry_with_image_media_file, user: user    
+      @nike_goddess_meta_datum= MetaDatum.create! media_resource: @nike_entry, \
+        meta_key: @meta_key_goddess, type: 'MetaDatumMetaTerms'
+      @nike_goddess_meta_datum.meta_terms << @meta_term_nike
+      @nike_entry.meta_data.create meta_key: meta_key_title, value: "Nike"
+      @nike_entry.reindex
+
+
+      @athena_and_nike_entry = FactoryGirl.create :media_entry_with_image_media_file, user: user
+      @athena_and_nike_goddess_meta_datum= MetaDatum.create! \
+        media_resource: @athena_and_nike_entry, meta_key: @meta_key_goddess, \
+        type: 'MetaDatumMetaTerms'
+      @athena_and_nike_goddess_meta_datum.meta_terms << @meta_term_nike
+      @athena_and_nike_goddess_meta_datum.meta_terms << @meta_term_athena
+      @athena_and_nike_entry.meta_data.create meta_key: meta_key_title, value: "Athena & Nike"
+      @athena_and_nike_entry.reindex
+
+
+      @set_for_contex_character.child_media_resources << @empty_character_entry
+      @set_for_contex_character.child_media_resources << @nike_entry
+      @set_for_contex_character.child_media_resources << @athena_and_nike_entry
+
+    end
 
   end
 
