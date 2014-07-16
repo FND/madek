@@ -1,4 +1,7 @@
 class UniquefyMetaKeyMetaTerm < ActiveRecord::Migration
+  class MetaTerm < ActiveRecord::Base
+  end
+
   def change
     remove_foreign_key :meta_keys_meta_terms, :meta_keys
     remove_foreign_key :meta_keys_meta_terms, :meta_terms

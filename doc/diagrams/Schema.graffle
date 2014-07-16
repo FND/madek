@@ -2505,6 +2505,15 @@ Models and Database-Relations\
 			<dict>
 				<key>stroke</key>
 				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.501961</string>
+						<key>g</key>
+						<string>0</string>
+						<key>r</key>
+						<string>1</string>
+					</dict>
 					<key>HeadArrow</key>
 					<string>DoubleArrow</string>
 					<key>Legacy</key>
@@ -2512,7 +2521,7 @@ Models and Database-Relations\
 					<key>LineType</key>
 					<integer>1</integer>
 					<key>TailArrow</key>
-					<string>FilledBall</string>
+					<string>Ball</string>
 				</dict>
 			</dict>
 			<key>Tail</key>
@@ -2582,13 +2591,22 @@ Models and Database-Relations\
 			<integer>720</integer>
 			<key>Points</key>
 			<array>
-				<string>{819.22981579734267, 56.727059934951527}</string>
-				<string>{742.03317696983015, 108.85482212640143}</string>
+				<string>{819.23122411396218, 56.727069509978797}</string>
+				<string>{742.038387139924, 108.85486156113888}</string>
 			</array>
 			<key>Style</key>
 			<dict>
 				<key>stroke</key>
 				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.501961</string>
+						<key>g</key>
+						<string>0</string>
+						<key>r</key>
+						<string>1</string>
+					</dict>
 					<key>HeadArrow</key>
 					<string>DoubleArrow</string>
 					<key>Legacy</key>
@@ -2596,7 +2614,7 @@ Models and Database-Relations\
 					<key>LineType</key>
 					<integer>1</integer>
 					<key>TailArrow</key>
-					<string>FilledBall</string>
+					<string>Ball</string>
 				</dict>
 			</dict>
 			<key>Tail</key>
@@ -4496,7 +4514,7 @@ belongs_to}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2014-07-15 07:45:17 +0000</string>
+	<string>2014-07-16 08:18:15 +0000</string>
 	<key>Modifier</key>
 	<string>DrTom</string>
 	<key>NotesVisible</key>
@@ -4544,16 +4562,6 @@ belongs_to}</string>
 			<string>coded</string>
 			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
 		</array>
-		<key>NSPrinter</key>
-		<array>
-			<string>coded</string>
-			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAlOU1ByaW50ZXIAhIQITlNPYmplY3QAhZKEhIQITlNTdHJpbmcBlIQBKxBjYW1wdXNwcmludDAxLWFkhoY=</string>
-		</array>
-		<key>NSPrinterName</key>
-		<array>
-			<string>string</string>
-			<string>campusprint01-ad</string>
-		</array>
 		<key>NSRightMargin</key>
 		<array>
 			<string>float</string>
@@ -4588,7 +4596,7 @@ belongs_to}</string>
 	<key>WindowInfo</key>
 	<dict>
 		<key>BottomSlabHeight</key>
-		<real>1096</real>
+		<real>856</real>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Expanded_Canvases</key>
@@ -4596,7 +4604,7 @@ belongs_to}</string>
 		<key>FitInWindow</key>
 		<true/>
 		<key>Frame</key>
-		<string>{{2742, 119}, {1258, 1440}}</string>
+		<string>{{-1920, 122}, {1920, 1200}}</string>
 		<key>ShowInfo</key>
 		<false/>
 		<key>ShowRuler</key>
@@ -4606,9 +4614,9 @@ belongs_to}</string>
 		<key>SidebarWidth</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-0.61061946902654929, -211.00000000000009}, {1155, 1206.1061946902655}}</string>
+		<string>{{-203.00000000000003, 0}, {1409.8440453686201, 783.00000000000011}}</string>
 		<key>Zoom</key>
-		<real>1.0761904761904761</real>
+		<real>1.3512132822477649</real>
 		<key>ZoomValues</key>
 		<array>
 			<array>
