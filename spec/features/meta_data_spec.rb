@@ -138,7 +138,7 @@ feature "MetaData" do
           type: type,
           meta_key: meta_key) 
       else
-        rais "Implement this case" 
+        raise "Implement this case" 
       end
 
       Rails.logger.info ["setting metadata filed value", field_set[:'data-meta-key'], @meta_data[i] ]
