@@ -19,11 +19,8 @@ class MetaKey < ActiveRecord::Base
   end
   has_many :contexts, through: :meta_key_definitions
 
-  has_many :meta_terms, ->{order("meta_terms.position ASC")}, through: :meta_key_definitions
-  accepts_nested_attributes_for :meta_terms, reject_if: proc { |attributes| attributes[:term].blank? }
 
   scope :with_meta_data, lambda{joins(:meta_data).group(:id)}
-  scope :for_meta_terms, lambda{where(meta_datum_object_type: "MetaDatumMetaTerms")}
   scope :with_context,   lambda{ |context_label| joins(:contexts).where('contexts.label' => context_label)}
   
   scope :used, ->(is_used = true){
@@ -34,12 +31,8 @@ class MetaKey < ActiveRecord::Base
                       WHERE "meta_keys"."id" = "meta_data"."meta_key_id") 
       #{operator}
       #{condition} (SELECT NULL FROM "meta_key_definitions" 
-                      WHERE "meta_keys"."id" = "meta_key_definitions"."meta_key_id")
-      #{operator}
-      #{condition} (SELECT NULL FROM "meta_keys_meta_terms"
-                      WHERE "meta_keys"."id" = "meta_keys_meta_terms"."meta_key_id") >) }
+                      WHERE "meta_keys"."id" = "meta_key_definitions"."meta_key_id")>) }
 
-  after_update :sort_meta_terms
 
   def label
     id
@@ -126,11 +119,6 @@ class MetaKey < ActiveRecord::Base
   end
   
 ########################################################
-
-  # TODO refactor to association has_many :used_meta_terms, :through ...
-  def used_term_ids
-    meta_data.flat_map(&:value).map(&:id).uniq.compact if meta_datum_object_type == "MetaDatumMetaTerms"
-  end
   
   def is_deletable?
     meta_key_definitions.empty? and meta_data.empty?
@@ -168,16 +156,6 @@ class MetaKey < ActiveRecord::Base
     h
   end
 
-  def sort_meta_terms
-    if meta_terms_alphabetical_order
-      ActiveRecord::Base.transaction do
-        meta_terms.reorder('term').to_a.each_with_index do |meta_term, index|
-          meta_term_to_update = meta_key_meta_terms.find_by(meta_term_id: meta_term.id)
-          meta_term_to_update.update_attribute(:position, index)
-        end
-      end
-    end
-  end
 
   def to_param
     id.gsub('/', '@')
