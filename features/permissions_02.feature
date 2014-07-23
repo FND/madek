@@ -25,6 +25,7 @@ Feature: Permissions
     And I click on the link "Exportieren" 
     And I click on the link "Datei ohne Metadaten" inside of the dialog 
     Then There is a link with class "original" in the list with class "download"
+    When I download the link on "ul.download a.original" it succeeds
 
   @jsbrowser
   Scenario: Download permission will let me download the resource
@@ -36,6 +37,7 @@ Feature: Permissions
     And I click on the link "Exportieren" 
     And I click on the link "Datei ohne Metadaten" inside of the dialog 
     Then There is a link with class "original" in the list with class "download"
+    When I download the link on "ul.download a.original" it succeeds
 
   @jsbrowser
   Scenario: Permissions for adding a resource to a set

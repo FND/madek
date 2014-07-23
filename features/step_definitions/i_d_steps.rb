@@ -75,3 +75,11 @@ Then /^I don't see the links to the resource \(my\)descendants$/ do
   expect(@popup.all("a#link_for_my_descendants_of",visible: true)).to be_empty
   expect(@popup.all("a#link_for_descendants_of",visible: true)).to be_empty
 end
+
+Then(/^I download the link on "(.*?)" it has a result of "(.*?)"$/) do |selector, expected|
+  page.execute_script("window.Test.downloadChecker(\"#{selector}\", #{expected})")
+end
+
+Then(/^I download the link on "(.*?)" it succeeds$/) do |selector|
+  page.execute_script("window.Test.downloadChecker(\"#{selector}\", {status: 200})")
+end
