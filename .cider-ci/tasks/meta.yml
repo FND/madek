@@ -17,3 +17,11 @@ tasks:
     scripts:
       main:
         body: git log -n 3
+
+  rake_routes: # this catches strange bugs (ie. server broken but not in rspec)
+    name: Rake Routes
+    environment_variables:
+      RAILS_ENV: production
+    scripts:
+      main:
+        body: rake routes
