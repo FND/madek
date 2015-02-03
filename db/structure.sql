@@ -709,6 +709,16 @@ CREATE TABLE meta_data_users (
 
 
 --
+-- Name: meta_data_vocables; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE meta_data_vocables (
+    meta_datum_id uuid,
+    vocable_id uuid
+);
+
+
+--
 -- Name: meta_key_definitions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -742,7 +752,8 @@ CREATE TABLE meta_keys (
     description text,
     enabled_for_media_entries boolean DEFAULT false NOT NULL,
     enabled_for_collections boolean DEFAULT false NOT NULL,
-    enabled_for_filters_sets boolean DEFAULT false NOT NULL
+    enabled_for_filters_sets boolean DEFAULT false NOT NULL,
+    vocabulary_id character varying(255)
 );
 
 
@@ -862,6 +873,28 @@ CREATE TABLE visualizations (
     resource_identifier character varying(255) NOT NULL,
     control_settings text,
     layout text
+);
+
+
+--
+-- Name: vocables; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE vocables (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    meta_key_id character varying(255),
+    term text
+);
+
+
+--
+-- Name: vocabularies; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE vocabularies (
+    id character varying(255) NOT NULL,
+    label text,
+    description text
 );
 
 
@@ -1210,6 +1243,22 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY visualizations
     ADD CONSTRAINT visualizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: vocables_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY vocables
+    ADD CONSTRAINT vocables_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: vocabularies_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY vocabularies
+    ADD CONSTRAINT vocabularies_pkey PRIMARY KEY (id);
 
 
 --
@@ -3020,6 +3069,10 @@ INSERT INTO schema_migrations (version) VALUES ('148');
 INSERT INTO schema_migrations (version) VALUES ('15');
 
 INSERT INTO schema_migrations (version) VALUES ('150');
+
+INSERT INTO schema_migrations (version) VALUES ('151');
+
+INSERT INTO schema_migrations (version) VALUES ('152');
 
 INSERT INTO schema_migrations (version) VALUES ('16');
 

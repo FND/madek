@@ -15,7 +15,6 @@ class MigrateMetaTermsToVocables < ActiveRecord::Migration
     belongs_to    :meta_key
   end
 
-
   class Context < ActiveRecord::Base
   end
 
@@ -44,8 +43,31 @@ class MigrateMetaTermsToVocables < ActiveRecord::Migration
     belongs_to :meta_key
   end
 
-
   def change
+
+    create_table :vocabularies, id: :string do |t|
+      t.text :label
+      t.text :description
+    end
+
+    add_column :meta_keys, :vocabulary_id, :string
+
+    create_table :vocables, id: :uuid do |t|
+      t.string :meta_key_id
+      t.text :term
+    end
+
+    create_table :meta_data_vocables, id: false do |t|
+      t.uuid :meta_datum_id
+      t.uuid :vocable_id
+    end
+
+    Vocable.reset_column_information
+    Vocabulary.reset_column_information
+    MetaKey.reset_column_information
+    MetaDatum.reset_column_information
+    MetaTerm.reset_column_information
+    MetaKeyDefinition.reset_column_information
 
     MetaDatum.joins(:meta_key) \
       .where("meta_keys.meta_datum_object_type = 'MetaDatum::Vocables'") \
@@ -70,7 +92,6 @@ class MigrateMetaTermsToVocables < ActiveRecord::Migration
         end
       end
 
-      raise 
 
       # TODO: 
       # 1. indexes and contraints
@@ -79,7 +100,6 @@ class MigrateMetaTermsToVocables < ActiveRecord::Migration
       # 3. drop meta_terms, meta_datum_meta_terms 
       #   
       #
-
 
 
   end
