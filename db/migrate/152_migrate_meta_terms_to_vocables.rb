@@ -93,23 +93,14 @@ class MigrateMetaTermsToVocables < ActiveRecord::Migration
                                                    label: mkd.label,
                                                    vocables_are_user_extensible: meta_key.is_extensible_list,
                                                    vocabulary: vocabulary})
+          meta_datum.update_column :meta_key_id, new_meta_key_id
           meta_datum.meta_terms.each do |meta_term|
             vocable= Vocable.find_or_create_by(term: meta_term, meta_key: new_meta_key)
-            meta_datum.vocables << vocable
+            meta_datum.vocables << vocable unless meta_datum.vocables.include? vocable
           end
         end
       end
 
-
-      # TODO: 
-      # 1. indexes and constraints
-      # 2. delete every meta_key of type MetaDatum::Vocable where the vocabulary_id is NULL
-      #   this should clean all the data 
-      # 3. drop meta_terms, meta_datum_meta_terms 
-      #   
-      #
-
-      raise 'not_yet'
-
+    
   end
 end
