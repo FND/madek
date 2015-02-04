@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
   rescue_from ForbiddenError, with: :user_forbidden_error
 
-  before_action :authenticated?, except: :root
+  before_action :authenticate, except: [:root, :login, :login_successful]
 
   def root
   end
@@ -24,9 +24,10 @@ class ApplicationController < ActionController::Base
     User.find_by_id session[:user_id]
   end
 
-  def authenticated?
-    current_user or redirect_to :root, flash: {
-      error: 'Bitte loggen Sie sich ein!'
+  def authenticate
+    current_user \
+      or redirect_to :root, flash: {
+        error: 'Bitte loggen Sie sich ein!'
     }
   end
 
