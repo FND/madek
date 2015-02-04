@@ -66,8 +66,7 @@ class MigrateMetaTermsToVocables < ActiveRecord::Migration
       t.index [:vocable_id, :meta_datum_id]
     end
 
-    add_column :meta_keys, :vocables_are_user_extensible, :bool, 
-      default: false, null: false
+    add_column :meta_keys, :vocables_are_user_extensible, :bool, default: false
 
     Vocable.reset_column_information
     Vocabulary.reset_column_information
