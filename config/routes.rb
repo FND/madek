@@ -8,8 +8,6 @@ MAdeK::Application.routes.draw do
 
   get 'filter_sets', to: 'filter_sets#index'
 
-  get 'login', to: "madek_zhdk_integration/authentication#login"
-
   get 'media_entries', to: 'media_entries#index'
   get 'media_entries/:id/images/:size', to: 'media_entries#image', as: 'media_entry_image'
 
@@ -17,6 +15,11 @@ MAdeK::Application.routes.draw do
 
   post 'session/sign_in', to: 'sessions#sign_in'
   post 'session/sign_out', to: 'sessions#sign_out'
+
+  #### ZHdK login ####
+
+  get 'login', to: "madek_zhdk_integration/authentication#login"
+  get 'authenticator/zhdk/login_successful/:id', :to => "madek_zhdk_integration/authentication#login_successful"
 
   ##### Admin namespace
   namespace :admin do
