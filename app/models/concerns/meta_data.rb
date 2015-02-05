@@ -7,7 +7,7 @@ module Concerns
     end
 
     def title
-      meta_data.find_by(meta_key_id: 'title').try(:value)
+      meta_data.find_by(meta_key_id: 'madek:core:title').try(:value)
     end
 
     def description
