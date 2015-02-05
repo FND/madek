@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     authenticated? \
       or redirect_to :root, flash: {
         error: 'Bitte loggen Sie sich ein!'
-    }
+      }
   end
 
   private
