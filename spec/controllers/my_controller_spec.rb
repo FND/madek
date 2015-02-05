@@ -127,4 +127,3 @@ end
 # hackish way to get the resource of a decorator - API in progress
 def presented_entity(presenter)
   presenter.instance_variable_get :@resource
-end

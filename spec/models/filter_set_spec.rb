@@ -51,7 +51,7 @@ describe FilterSet do
 
   context 'reader methods for meta_data' do
 
-    it_provides_reader_method_for 'meta_datum', 'title'
+    it_provides_reader_method_for 'meta_datum', 'title', 'madek:core:title'
     it_provides_reader_method_for 'meta_datum', 'description'
 
   end
