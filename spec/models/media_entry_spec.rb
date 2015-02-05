@@ -52,8 +52,8 @@ describe MediaEntry do
 
   context 'reader methods for meta_data' do
 
-    it_provides_reader_method_for 'meta_datum', 'title', 'madek:core:title'
-    it_provides_reader_method_for 'meta_datum', 'description'
+    it_provides_reader_method_for 'title'
+    it_provides_reader_method_for 'description'
 
   end
 end
