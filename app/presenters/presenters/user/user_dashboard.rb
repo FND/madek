@@ -11,28 +11,22 @@ module Presenters
         {
           media_entries:
             @user.media_entries.reorder('created_at DESC').limit(@limit)
-              .map do |me|
-                Presenters::MediaEntries::MediaEntryThumb.new(me, @user)
-              end,
+              .map { |r| thumbify(r) },
           collections:
             @user.collections.reorder('created_at DESC').limit(@limit)
-              .map do |me|
-                Presenters::Collections::CollectionThumb.new(me, @user)
-              end,
+              .map { |r| thumbify(r) },
           filter_sets:
             @user.filter_sets.reorder('created_at DESC').limit(@limit)
-              .map { |me| Presenters::FilterSets::FilterSetThumb.new(me, @user) },
+              .map { |r| thumbify(r) },
           imports:
             @user.created_media_entries.reorder('created_at DESC').limit(@limit)
-              .map do |me|
-                Presenters::MediaEntries::MediaEntryThumb.new(me, @user)
-              end
+              .map { |r| thumbify(r) }
         }
       end
 
       def latest_imports
         @user.created_media_entries.reorder('created_at DESC').limit(@limit)
-          .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me, @user) }
+          .map { |r| thumbify(r) }
       end
 
       def favorites
@@ -48,26 +42,38 @@ module Presenters
           media_entries:
             MediaEntry.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map do |me|
-                Presenters::MediaEntries::MediaEntryThumb.new(me, @user)
-              end,
+              .map { |r| thumbify(r) },
           collections:
             Collection.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map do |c|
-                Presenters::Collections::CollectionThumb.new(c, @user)
-              end,
+              .map { |r| thumbify(r) },
           filter_sets:
             FilterSet.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map do |fs|
-                Presenters::FilterSets::FilterSetThumb.new(fs, @user)
-              end
+              .map { |r| thumbify(r) }
         }
       end
 
       def groups
         @user.groups.limit(4)
+      end
+
+      private
+
+      def thumbify(resource)
+        klass = resource.class
+        presenter = \
+          if klass == MediaEntry
+            Presenters::MediaEntries::MediaEntryThumb
+          elsif klass == Collection
+            Presenters::Collections::CollectionThumb
+          elsif klass == FilterSet
+            Presenters::FilterSets::FilterSetThumb
+          else
+            raise 'Missing presenter'
+          end
+
+        presenter.new(resource, @user)
       end
 
     end
