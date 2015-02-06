@@ -48,21 +48,18 @@ module Presenters
           media_entries:
             MediaEntry.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map do |me|
-                Presenters::MediaEntries::MediaEntryThumb.new(me, @user)
-              end,
+              .map \
+                { |me| Presenters::MediaEntries::MediaEntryThumb.new(me, @user) },
           collections:
             Collection.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map do |c|
-                Presenters::Collections::CollectionThumb.new(c, @user)
-              end,
+              .map \
+                { |c| Presenters::Collections::CollectionThumb.new(c, @user) },
           filter_sets:
             FilterSet.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map do |fs|
-                Presenters::FilterSets::FilterSetThumb.new(fs, @user)
-              end
+              .map \
+                { |fs| Presenters::FilterSets::FilterSetThumb.new(fs, @user) }
         }
       end
 
