@@ -59,7 +59,7 @@ RSpec.shared_examples 'keywords' do
                          Hash[:meta_key, meta_key,
                               model_name_singular, resource]
 
-    keyword = FactoryGirl.create(:keyword, meta_datum: meta_datum)
+    FactoryGirl.create(:keyword, meta_datum: meta_datum)
 
     expect(resource.keywords).not_to be_empty
   end
