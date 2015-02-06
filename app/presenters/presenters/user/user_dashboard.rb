@@ -11,22 +11,22 @@ module Presenters
         {
           media_entries:
             @user.media_entries.reorder('created_at DESC').limit(@limit)
-              .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me) },
+              .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me, @user) },
           collections:
             @user.collections.reorder('created_at DESC').limit(@limit)
-              .map { |me| Presenters::Collections::CollectionThumb.new(me) },
+              .map { |me| Presenters::Collections::CollectionThumb.new(me, @user) },
           filter_sets:
             @user.filter_sets.reorder('created_at DESC').limit(@limit)
-              .map { |me| Presenters::FilterSets::FilterSetThumb.new(me) },
+              .map { |me| Presenters::FilterSets::FilterSetThumb.new(me, @user) },
           imports:
             @user.created_media_entries.reorder('created_at DESC').limit(@limit)
-              .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me) }
+              .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me, @user) }
         }
       end
 
       def latest_imports
         @user.created_media_entries.reorder('created_at DESC').limit(@limit)
-          .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me) }
+          .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me, @user) }
       end
 
       def favorites
@@ -42,15 +42,15 @@ module Presenters
           media_entries:
             MediaEntry.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me) },
+              .map { |me| Presenters::MediaEntries::MediaEntryThumb.new(me, @user) },
           collections:
             Collection.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map { |c| Presenters::Collections::CollectionThumb.new(c) },
+              .map { |c| Presenters::Collections::CollectionThumb.new(c, @user) },
           filter_sets:
             FilterSet.entrusted_to_user(@user)
               .reorder('created_at DESC').limit(@limit)
-              .map { |fs| Presenters::FilterSets::FilterSetThumb.new(fs) }
+              .map { |fs| Presenters::FilterSets::FilterSetThumb.new(fs, @user) }
         }
       end
 
