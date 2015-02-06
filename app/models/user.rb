@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
 
   #############################################################
 
-  def shared_media_entry_with_groups?(media_entry)
+  def entrusted_media_entry_to_groups?(media_entry)
     media_entries
       .joins(:group_permissions)
       .where(media_entry_group_permissions:
@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
       .exists?
   end
 
-  def shared_media_entry_with_users?(media_entry)
+  def entrusted_media_entry_to_users?(media_entry)
     media_entries
       .joins(:user_permissions)
       .where(media_entry_user_permissions:
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
       .exists?
   end
 
-  def shared_collection_with_groups?(collection)
+  def entrusted_collection_to_groups?(collection)
     collections
       .joins(:group_permissions)
       .where(collection_group_permissions:
@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
       .exists?
   end
 
-  def shared_collection_with_users?(collection)
+  def entrusted_collection_to_users?(collection)
     collections
       .joins(:user_permissions)
       .where(collection_user_permissions:
@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
       .exists?
   end
 
-  def shared_filter_set_with_groups?(filter_set)
+  def entrusted_filter_set_to_groups?(filter_set)
     filter_sets
       .joins(:group_permissions)
       .where(filter_set_group_permissions:
@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
       .exists?
   end
 
-  def shared_filter_set_with_users?(filter_set)
+  def entrusted_filter_set_to_users?(filter_set)
     filter_sets
       .joins(:user_permissions)
       .where(filter_set_user_permissions:
