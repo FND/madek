@@ -43,3 +43,25 @@ RSpec.shared_examples 'description' do
   end
 
 end
+
+RSpec.shared_examples 'keywords' do
+
+  it 'keywords' do
+    model_name_singular = described_class.model_name.singular.to_sym
+    resource = FactoryGirl.create(model_name_singular)
+
+    meta_key = \
+      (MetaKey.find_by_id('madek:core:keywords') \
+        || FactoryGirl.create(:meta_key_keywords, id: 'madek:core:keywords'))
+
+    meta_datum = \
+      FactoryGirl.create :meta_datum_keywords,
+                         Hash[:meta_key, meta_key,
+                              model_name_singular, resource]
+
+    keyword = FactoryGirl.create(:keyword, meta_datum: meta_datum)
+
+    expect(resource.keywords).not_to be_empty
+  end
+
+end

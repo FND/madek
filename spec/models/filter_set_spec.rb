@@ -53,6 +53,7 @@ describe FilterSet do
 
     it_provides_reader_method_for 'title'
     it_provides_reader_method_for 'description'
+    it_provides_reader_method_for 'keywords'
 
   end
 end
