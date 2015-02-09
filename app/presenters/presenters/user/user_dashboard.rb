@@ -61,13 +61,13 @@ module Presenters
       private
 
       def thumbify(resource)
-        klass = resource.class
         presenter = \
-          if klass == MediaEntry
+          case resource.class.name
+          when 'MediaEntry'
             Presenters::MediaEntries::MediaEntryThumb
-          elsif klass == Collection
+          when 'Collection'
             Presenters::Collections::CollectionThumb
-          elsif klass == FilterSet
+          when 'FilterSet'
             Presenters::FilterSets::FilterSetThumb
           else
             raise 'Missing presenter'
