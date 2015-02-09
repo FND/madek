@@ -24,8 +24,9 @@ module Presenters
 
         def shared_status
           model_name = @resource.class.model_name
-          @user.send("entrusted_#{model_name.singular}_to_users?",
-                     @resource) \
+          :shared if \
+            @user.send("entrusted_#{model_name.singular}_to_users?",
+                        @resource) \
             or @user.send("entrusted_#{model_name.singular}_to_groups?",
                           @resource) \
             or @resource.entrusted_to_user?(@user)
