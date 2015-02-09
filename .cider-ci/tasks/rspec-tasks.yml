@@ -169,3 +169,8 @@
   scripts:
     main:
       body: bundle exec rspec "./spec/modules/living_styleguide_spec.rb"
+"./spec/presenters/media_entries/media_entry_thumb_spec.rb":
+  name: "./spec/presenters/media_entries/media_entry_thumb_spec.rb"
+  scripts:
+    main:
+      body: bundle exec rspec "./spec/presenters/media_entries/media_entry_thumb_spec.rb"
