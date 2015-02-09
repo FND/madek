@@ -169,11 +169,6 @@
   scripts:
     main:
       body: bundle exec rspec "./spec/modules/living_styleguide_spec.rb"
-"./spec/presenters/media_entries/media_entry_thumb_spec.rb":
-  name: "./spec/presenters/media_entries/media_entry_thumb_spec.rb"
-  scripts:
-    main:
-      body: bundle exec rspec "./spec/presenters/media_entries/media_entry_thumb_spec.rb"
 "./spec/presenters/collections/collection_thumb_spec.rb":
   name: "./spec/presenters/collections/collection_thumb_spec.rb"
   scripts:
@@ -184,3 +179,13 @@
   scripts:
     main:
       body: bundle exec rspec "./spec/presenters/filter_sets/filter_set_thumb_spec.rb"
+"./spec/presenters/media_entries/media_entry_thumb_spec.rb":
+  name: "./spec/presenters/media_entries/media_entry_thumb_spec.rb"
+  scripts:
+    main:
+      body: bundle exec rspec "./spec/presenters/media_entries/media_entry_thumb_spec.rb"
+"./spec/presenters/shared/privacy_status_spec.rb":
+  name: "./spec/presenters/shared/privacy_status_spec.rb"
+  scripts:
+    main:
+      body: bundle exec rspec "./spec/presenters/shared/privacy_status_spec.rb"
