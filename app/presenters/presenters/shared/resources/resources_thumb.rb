@@ -26,7 +26,7 @@ module Presenters
           model_name = @resource.class.model_name
           :shared if \
             @user.send("entrusted_#{model_name.singular}_to_users?",
-                        @resource) \
+                       @resource) \
             or @user.send("entrusted_#{model_name.singular}_to_groups?",
                           @resource) \
             or @resource.entrusted_to_user?(@user)
