@@ -13,8 +13,8 @@ module Concerns
 
       else
 
-        file_path = ::DOCUMENT_UNKNOWN_THUMBNAIL_FILE_PATH
-        content_type = ::DOCUMENT_UNKNOWN_THUMBNAIL_CONTENT_TYPE
+        file_path = ::GENERIC_THUMBNAIL_FILE_PATH
+        content_type = ::GENERIC_THUMBNAIL_CONTENT_TYPE
 
       end
 

@@ -113,8 +113,8 @@ FILE_STORAGE_DIR      = DirectoriesConfig::FILE_STORAGE_DIR
 THUMBNAIL_STORAGE_DIR = DirectoriesConfig::THUMBNAIL_STORAGE_DIR
 ZIP_STORAGE_DIR       = DirectoriesConfig::ZIP_STORAGE_DIR
 
-DOCUMENT_UNKNOWN_THUMBNAIL_FILE_PATH = "#{Rails.root}/app/assets/images/thumbnails/document_unknown.png"
-DOCUMENT_UNKNOWN_THUMBNAIL_CONTENT_TYPE = 'image/png'
+GENERIC_THUMBNAIL_FILE_PATH = "#{Rails.root}/app/assets/images/thumbnails/document_unknown.png"
+GENERIC_THUMBNAIL_CONTENT_TYPE = 'image/png'
 
 # symbolic links, to ultimately break your installation :-/
 # $ sudo ln -s /usr/bin/exiftool /usr/local/bin/exiftool
