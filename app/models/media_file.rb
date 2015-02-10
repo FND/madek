@@ -47,4 +47,8 @@ class MediaFile < ActiveRecord::Base
     previews.find_by(thumbnail: size)
   end
 
+  def represantable_as_image?
+    ['image', 'video'].include? media_type
+  end
+
 end

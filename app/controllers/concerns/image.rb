@@ -4,10 +4,23 @@ module Concerns
 
     def get_preview_and_send_image(media_entry, size)
       # TODO: review/cleanup
-      begin
+
+      if media_entry.media_file.represantable_as_image?
+
         preview = media_entry.media_file.preview(size)
-        send_file preview.file_path,
-                  type: preview.content_type,
+        file_path = preview.file_path
+        content_type = preview.content_type
+
+      else
+
+        file_path = ::DOCUMENT_UNKNOWN_THUMBNAIL_FILE_PATH
+        content_type = ::DOCUMENT_UNKNOWN_THUMBNAIL_CONTENT_TYPE
+
+      end
+
+      begin
+        send_file file_path,
+                  type: content_type,
                   disposition: 'inline'
       rescue
         Rails.logger.warn 'image not found!'
