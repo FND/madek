@@ -16,9 +16,13 @@
           = combo('metadata-box',
               mods: 'ui-summary-table.ui-set-summary.compact',
               list: [['Title', @get.title, 'title-l'],
+                     ['Description', @get.description],
+                     ['Keywords', component('tag-cloud.label',
+                        mods: ['small','ellipsed'],
+                        list: @get.keywords.map {|i| { text: i } } )],
                      ['Responsible', component('tag-cloud.person',
                         mods: ['small','ellipsed'],
-                        list: [{ text: @get.responsible, href: '#' }])]])
+                        list: [{ text: @get.responsible}])]])
 
       #ui-resources-list-container.ui-container.midtone.rounded-bottom
         .ui-container.inverted.ui-toolbar.pvx
