@@ -14,6 +14,8 @@
                           picture: asset_path('dev_todo.png'))
 
           - tag_cloud_mods = ['small','ellipsed']
+          -# TODO: build this list in a presenter?
+            @get.metadata => [ [key, value], [key, value] ]
           = combo('metadata-box',
               mods: 'ui-summary-table.ui-set-summary.compact',
               list: [['Title', @get.title, 'title-l'],
