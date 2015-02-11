@@ -8,7 +8,17 @@ describe Presenters::Collections::CollectionThumb do
   end
 
   it_can_be 'dumped' do
-    let(:object) { Collection.all.sample }
+    collection = FactoryGirl.create(:collection)
+
+    meta_key = \
+      (MetaKey.find_by_id('madek:core:title') \
+        || FactoryGirl.create(:meta_key_text, id: 'madek:core:title'))
+
+    FactoryGirl.create :meta_datum_text,
+                       meta_key: meta_key,
+                       collection: collection
+
+    let(:object) { collection }
   end
 
   it_responds_to 'privacy_status' do
