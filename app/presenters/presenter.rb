@@ -21,7 +21,9 @@ class Presenter
             "ERROR: #{e.message}"
           end
 
-        [api_method, Presenter.dump_recur(result)]
+        # using Object#send, because calling private class
+        # method from its instance does not work per se
+        [api_method, Presenter.send(:dump_recur, result)]
       end
     ]
   end
