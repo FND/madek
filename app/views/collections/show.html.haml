@@ -13,16 +13,17 @@
                           text: @get.title,
                           picture: asset_path('dev_todo.png'))
 
+          - tag_cloud_mods = ['small','ellipsed']
           = combo('metadata-box',
               mods: 'ui-summary-table.ui-set-summary.compact',
               list: [['Title', @get.title, 'title-l'],
                      ['Description', @get.description],
                      ['Keywords', component('tag-cloud.label',
-                        mods: ['small','ellipsed'],
-                        list: @get.keywords.map {|i| { text: i } } )],
+                        mods: tag_cloud_mods,
+                        list: @get.keywords)],
                      ['Responsible', component('tag-cloud.person',
-                        mods: ['small','ellipsed'],
-                        list: [{ text: @get.responsible}])]])
+                        mods: tag_cloud_mods,
+                        list: [@get.responsible])]])
 
       #ui-resources-list-container.ui-container.midtone.rounded-bottom
         .ui-container.inverted.ui-toolbar.pvx
