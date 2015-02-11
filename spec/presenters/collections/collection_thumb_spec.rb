@@ -9,7 +9,11 @@ describe Presenters::Collections::CollectionThumb do
 
   it_can_be 'dumped' do
     collection = FactoryGirl.create(:collection)
-    meta_key = MetaKey.find_by_id('madek:core:title')
+
+    meta_key = \
+      (MetaKey.find_by_id('madek:core:title') \
+        || FactoryGirl.create(:meta_key_text, id: 'madek:core:title'))
+
     FactoryGirl.create :meta_datum_text,
                        meta_key: meta_key,
                        collection: collection
