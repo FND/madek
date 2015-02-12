@@ -12,17 +12,19 @@
 
   .ui-container
 
-    %h3= 'My media entries'
-    %div= link_to 'show all', media_entries_path(latest: true)
-    %div= @get.my_content[:media_entries].to_json
+    -# %h3= 'My media entries'
+    -# %div= link_to 'show all', media_entries_path(latest: true)
+    -# %div= @get.my_content[:media_entries].to_json
+    -#
+    -# %h3= 'My collections'
+    -# %div= link_to 'show all', collections_path(latest: true)
+    -# = @get.my_content[:collections].to_json
+    -#
+    -# %h3= 'My filter sets'
+    -# %div= link_to 'show all', filter_sets_path(latest: true)
+    -# = @get.my_content[:filter_sets].to_json
 
-    %h3= 'My collections'
-    %div= link_to 'show all', collections_path(latest: true)
-    = @get.my_content[:collections].to_json
-
-    %h3= 'My filter sets'
-    %div= link_to 'show all', filter_sets_path(latest: true)
-    = @get.my_content[:filter_sets].to_json
+    = deco('polybox', poly_resources: @get.my_content)
 
     %h3= 'Latest imports'
     %div= link_to 'show all', media_entries_path(imported: true)
