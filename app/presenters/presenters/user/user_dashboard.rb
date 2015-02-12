@@ -17,9 +17,6 @@ module Presenters
               .map { |r| thumbify(r) },
           filter_sets:
             @user.filter_sets.reorder('created_at DESC').limit(@limit)
-              .map { |r| thumbify(r) },
-          imports:
-            @user.created_media_entries.reorder('created_at DESC').limit(@limit)
               .map { |r| thumbify(r) }
         }
       end
