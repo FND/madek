@@ -1,10 +1,11 @@
 module Presenters
   module FilterSets
     class FilterSetThumb < Presenters::Shared::Resources::ResourcesThumb
-      def image_url(size = :small
-        binding.pry
-        
-        asset_path('dev_todo.png')
+      def image_url(size = :small)
+        ActionController::Base.helpers.image_path 'dev_todo.png'
+        # TODO: implement
+        #   - get a list of all entries matching the filter
+        #   - select the first one that has an image, use that image
       end
     end
   end
