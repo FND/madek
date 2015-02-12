@@ -10,13 +10,15 @@ describe Presenters::FilterSets::FilterSetThumb do
   it_can_be 'dumped' do
     filter_set = FactoryGirl.create(:filter_set)
 
-    meta_key = \
-      MetaKey.find_by_id('madek:core:title') \
-        or with_disabled_triggers do
-          # TODO: remove as soon as the madek:core meta data is part of the test db
-          MetaKey.create id: 'madek:core:keywords',
-                         meta_datum_object_type: 'MetaDatum::Keyword'
-        end
+    unless MetaKey.find_by_id('madek:core:title')
+      with_disabled_triggers do
+        # TODO: remove as soon as the madek:core meta data is part of the test db
+        MetaKey.create id: 'madek:core:title',
+                       meta_datum_object_type: 'MetaDatum::Text'
+      end
+    end
+
+    meta_key = MetaKey.find_by_id('madek:core:title')
 
     FactoryGirl.create :meta_datum_text,
                        meta_key: meta_key,
