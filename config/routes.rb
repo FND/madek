@@ -6,14 +6,14 @@ MAdeK::Application.routes.draw do
   # NOTE: ALL Models are 'resources', don't confuse with "MediaResources"!
 
   ## Concerns - used with several Resources ####################################
-  concern :has_image do
-    get 'image/:size', action: :image, as: 'image', on: :member
+  concern :previewable do
+    get 'preview/:size', action: :preview, as: 'preview', on: :member
   end
 
   ## The resources we internally call "MediaResources":
-  resources :media_entries, path: 'entries', only: [:index, :show], concerns: :has_image
-  resources :collections, only: [:index, :show], concerns: :has_image
-  resources :filter_sets, only: [:index, :show], concerns: :has_image
+  resources :media_entries, path: 'entries', only: [:index, :show], concerns: :previewable
+  resources :collections, only: [:index, :show], concerns: :previewable
+  resources :filter_sets, only: [:index, :show], concerns: :previewable
 
   # Other App routes ###########################################################
   # TODO: resource 'users'?

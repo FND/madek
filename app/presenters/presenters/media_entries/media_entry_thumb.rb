@@ -7,7 +7,7 @@ module Presenters
       end
 
       def image_url(size = :small)
-        image_media_entry_path(@resource, size)
+        preview_media_entry_path(@resource, size)
       end
 
       def authors
