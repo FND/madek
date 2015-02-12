@@ -25,7 +25,7 @@
       %h3= 'My filter sets'
       %div= link_to 'show all', filter_sets_path(latest: true)
 
-    = deco('polybox', title: 'My Resources',
+    = deco('polybox', title: 'My content',
                       link: { text: 'show all',
                               href: media_entries_path(latest: true)},
                       poly_resources: @get.my_content)
@@ -41,7 +41,7 @@
                             href: media_entries_path(favorite: true)},
                       poly_resources: @get.favorites)
 
-    = deco('polybox', title: 'Entrusted to me',
+    = deco('polybox', title: 'My entrusted content',
                     link: { text: 'show all',
                             href: media_entries_path(entrusted: true)},
                       poly_resources: @get.entrusted)
