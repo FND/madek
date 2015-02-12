@@ -2,8 +2,13 @@ module Presenters
   module MediaEntries
     class MediaEntryThumb < Presenters::Shared::Resources::ResourcesThumb
 
+      def url
+        # media_entry_path @resource
+      end
+
       def image_url(size = :small)
-        media_entry_image_path(@resource, size)
+        'http://example.com/foo.jpg'
+        # media_entry_image_path(@resource, size)
       end
 
       def authors

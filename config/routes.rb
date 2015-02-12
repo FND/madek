@@ -8,8 +8,9 @@ MAdeK::Application.routes.draw do
 
   get 'filter_sets', to: 'filter_sets#index'
 
-  get 'media_entries', to: 'media_entries#index'
-  get 'media_entries/:id/images/:size', to: 'media_entries#image', as: 'media_entry_image'
+  resources :media_entries, path: 'entries', only: [:index, :show] do
+    get 'images/:size', to: :image, as: 'image', on: :member
+  end
 
   get 'my', to: 'my#dashboard', as: 'my_dashboard'
 
@@ -47,7 +48,7 @@ MAdeK::Application.routes.draw do
         get :filter_sets
       end
     end
-    root to: 'dashboard#index' 
+    root to: 'dashboard#index'
   end
 
   ##### STYLEGUIDE (resourceful-ish)
