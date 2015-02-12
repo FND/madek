@@ -10,9 +10,10 @@ RSpec.shared_examples 'title' do
     model_name_singular = described_class.model_name.singular.to_sym
     resource = FactoryGirl.create(model_name_singular)
 
-    meta_key = \
-      (MetaKey.find_by_id('madek:core:title') \
-        || FactoryGirl.create(:meta_key_text, id: 'madek:core:title'))
+    meta_key = MetaKey.find_by_id('madek:core:title')
+
+    # protect against strange bug/missing core meta_key
+    throw 'core:title should be in db!!!' unless meta_key
 
     FactoryGirl.create \
       :meta_datum_text,
@@ -50,9 +51,7 @@ RSpec.shared_examples 'keywords' do
     model_name_singular = described_class.model_name.singular.to_sym
     resource = FactoryGirl.create(model_name_singular)
 
-    meta_key = \
-      (MetaKey.find_by_id('madek:core:keywords') \
-        || FactoryGirl.create(:meta_key_keywords, id: 'madek:core:keywords'))
+    meta_key = MetaKey.find_by_id('madek:core:keywords')
 
     meta_datum = \
       FactoryGirl.create :meta_datum_keywords,

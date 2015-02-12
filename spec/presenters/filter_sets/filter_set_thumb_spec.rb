@@ -10,9 +10,10 @@ describe Presenters::FilterSets::FilterSetThumb do
   it_can_be 'dumped' do
     filter_set = FactoryGirl.create(:filter_set)
 
-    meta_key = \
-      (MetaKey.find_by_id('madek:core:title') \
-        || FactoryGirl.create(:meta_key_text, id: 'madek:core:title'))
+    meta_key = MetaKey.find_by_id('madek:core:title')
+
+    # protect against strange bug/missing core meta_key
+    throw 'core:title should be in db!!!' unless meta_key
 
     FactoryGirl.create :meta_datum_text,
                        meta_key: meta_key,
