@@ -1,6 +1,11 @@
 module Presenters
   module FilterSets
     class FilterSetThumb < Presenters::Shared::Resources::ResourcesThumb
+
+      def url
+        filter_set_path @resource
+      end
+
       def image_url(size = :small)
         ActionController::Base.helpers.image_path 'dev_todo.png'
         # TODO: implement
