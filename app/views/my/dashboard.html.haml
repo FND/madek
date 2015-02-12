@@ -47,5 +47,7 @@
                       poly_resources: @get.entrusted)
 
 
-    %h3= 'Groups'
-    = @get.groups.to_json
+    = combo('resources-header', title: 'Groups')
+    -# TODO: group list decorator
+    = component('tag-cloud.group', mods: 'compact',
+        list: @get.groups.map {|g| { text: g[:name] } })

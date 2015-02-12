@@ -61,7 +61,13 @@ module Presenters
       end
 
       def groups
-        @user.groups.limit(4)
+        # TODO: GroupsPresenter?
+        @user.groups.limit(4).map do |group|
+          {
+            id: group.id,
+            name: group.name
+          }
+        end
       end
 
       private
