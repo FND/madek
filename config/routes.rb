@@ -2,22 +2,26 @@ MAdeK::Application.routes.draw do
 
   root to: 'application#root'
 
-  get 'collections', to: 'collections#index'
-  get 'collections/:id', to: 'collections#show'
-  get 'collections/:id/images/:size', to: 'collections#image', as: 'collection_image'
-
-  get 'filter_sets', to: 'filter_sets#index'
-
+  # RESTful Routes #############################################################
+  # NOTE: ALL Models are 'resources', don't confuse with "MediaResources"!
   resources :media_entries, path: 'entries', only: [:index, :show] do
     get 'images/:size', to: :image, as: 'image', on: :member
   end
 
+  resources :collections, only: [:index, :show] do
+    get 'images/:size', to: :image, as: 'image', on: :member
+  end
+
+  resources :filter_sets, path: 'entries', only: [:index, :show]
+
+  # Other App routes ###########################################################
+  # TODO: resource 'users'?
   get 'my', to: 'my#dashboard', as: 'my_dashboard'
 
   post 'session/sign_in', to: 'sessions#sign_in'
   post 'session/sign_out', to: 'sessions#sign_out'
 
-  ##### Admin namespace
+  # Admin routes ###############################################################
   namespace :admin do
     resources :users do
       member do
@@ -51,7 +55,7 @@ MAdeK::Application.routes.draw do
     root to: 'dashboard#index'
   end
 
-  ##### STYLEGUIDE (resourceful-ish)
+  # STYLEGUIDE #################################################################
   get 'styleguide', to: 'styleguide#index', as: 'styleguide'
   get 'styleguide/:section', to: 'styleguide#show', as: 'styleguide_section'
   get 'styleguide/:section/:element', to: 'styleguide#element', as: 'styleguide_element'
