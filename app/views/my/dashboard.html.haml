@@ -12,47 +12,40 @@
 
   .ui-container
 
-    -# %h3= 'My media entries'
-    -# %div= link_to 'show all', media_entries_path(latest: true)
-    -# %div= @get.my_content[:media_entries].to_json
-    -#
-    -# %h3= 'My collections'
-    -# %div= link_to 'show all', collections_path(latest: true)
-    -# = @get.my_content[:collections].to_json
-    -#
-    -# %h3= 'My filter sets'
-    -# %div= link_to 'show all', filter_sets_path(latest: true)
-    -# = @get.my_content[:filter_sets].to_json
+    -# TODO: how to handle the 3 headings/links inside a polybox???
+      it sounds like a tabbed section…
 
-    = deco('polybox', poly_resources: @get.my_content)
+    -# old:
+      %h3= 'My media entries'
+      %div= link_to 'show all', media_entries_path(latest: true)
 
-    %h3= 'Latest imports'
-    %div= link_to 'show all', media_entries_path(imported: true)
-    = @get.latest_imports.to_json
+      %h3= 'My collections'
+      %div= link_to 'show all', collections_path(latest: true)
 
-    %h3= 'Favorite media entries'
-    %div= link_to 'show all', media_entries_path(favorite: true)
-    = @get.favorites[:media_entries].to_json
+      %h3= 'My filter sets'
+      %div= link_to 'show all', filter_sets_path(latest: true)
 
-    %h3= 'Favorite collections'
-    %div= link_to 'show all', collections_path(favorite: true)
-    = @get.favorites[:collections].to_json
+    = deco('polybox', title: 'My Resources',
+                      link: { text: 'show all',
+                              href: media_entries_path(latest: true)},
+                      poly_resources: @get.my_content)
 
-    %h3= 'Favorite filter sets'
-    %div= link_to 'show all', filter_sets_path(favorite: true)
-    = @get.favorites[:filter_sets].to_json
+    = deco('polybox', title: 'My latest imports',
+                    link: { text: 'show all',
+                            href: media_entries_path(imported: true)},
+                      poly_resources: { media_entries: @get.latest_imports })
 
-    %h3= 'Entrusted media entries'
-    %div= link_to 'show all', media_entries_path(entrusted: true)
-    = @get.entrusted[:media_entries].to_json
 
-    %h3= 'Entrusted collections'
-    %div= link_to 'show all', collections_path(entrusted: true)
-    = @get.entrusted[:collections].to_json
+    = deco('polybox', title: 'My favorites',
+                    link: { text: 'show all',
+                            href: media_entries_path(favorite: true)},
+                      poly_resources: @get.favorites)
 
-    %h3= 'Entrusted filter sets'
-    %div= link_to 'show all', filter_sets_path(entrusted: true)
-    = @get.entrusted[:filter_sets].to_json
+    = deco('polybox', title: 'Entrusted to me',
+                    link: { text: 'show all',
+                            href: media_entries_path(entrusted: true)},
+                      poly_resources: @get.entrusted)
+
 
     %h3= 'Groups'
     = @get.groups.to_json
