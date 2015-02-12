@@ -7,8 +7,7 @@ module Presenters
       end
 
       def image_url(size = :small)
-        'http://example.com/foo.jpg'
-        # media_entry_image_path(@resource, size)
+        image_media_entry_path(@resource, size)
       end
 
       def authors

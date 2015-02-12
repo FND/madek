@@ -4,15 +4,16 @@ MAdeK::Application.routes.draw do
 
   # RESTful Routes #############################################################
   # NOTE: ALL Models are 'resources', don't confuse with "MediaResources"!
-  resources :media_entries, path: 'entries', only: [:index, :show] do
-    get 'images/:size', to: :image, as: 'image', on: :member
+
+  ## Concerns - used with several Resources ####################################
+  concern :has_image do
+    get 'image/:size', action: :image, as: 'image', on: :member
   end
 
-  resources :collections, only: [:index, :show] do
-    get 'images/:size', to: :image, as: 'image', on: :member
-  end
-
-  resources :filter_sets, path: 'entries', only: [:index, :show]
+  ## The resources we internally call "MediaResources":
+  resources :media_entries, path: 'entries', only: [:index, :show], concerns: :has_image
+  resources :collections, only: [:index, :show], concerns: :has_image
+  resources :filter_sets, only: [:index, :show], concerns: :has_image
 
   # Other App routes ###########################################################
   # TODO: resource 'users'?
