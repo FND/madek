@@ -9,8 +9,8 @@ class MediaEntriesController < ApplicationController
     begin
       preview = media_entry.media_file.preview(size)
       send_file preview.file_path,
-        type: preview.content_type,
-        disposition: 'inline'
+                type: preview.content_type,
+                disposition: 'inline'
     rescue
       Rails.logger.warn 'image not found!'
       render nothing: true, status: 404

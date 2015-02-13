@@ -140,7 +140,7 @@ FactoryGirl.define do
   factory :media_file_for_audio, class: MediaFile do
     extension 'mp3'
     media_type 'audio'
-    size 2793600
+    size 2_793_600
     content_type 'audio/mpeg'
     filename 'audio.mp3'
     guid { UUIDTools::UUID.random_create.hexdigest }
