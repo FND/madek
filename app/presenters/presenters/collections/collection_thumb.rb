@@ -5,7 +5,7 @@ module Presenters
       def image_url
         media_entry = \
           @resource.media_entries.cover \
-            or @resource.media_entries.first
+            || @resource.media_entries.first
 
         if media_entry.media_file.represantable_as_image?
           media_entry_image_path(media_entry, :small)
