@@ -3,3 +3,7 @@
   %td
     = link_to admin_user_path(media_entry.responsible_user) do
       #{media_entry.responsible_user.person}
+  %td.active
+    .btn-group
+      = link_to admin_media_entry_path(media_entry), class: 'btn btn-default btn-sm' do
+        %i.glyphicon.glyphicon-eye-open
