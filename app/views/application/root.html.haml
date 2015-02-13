@@ -14,7 +14,7 @@
         .ui-form-group.rowed.compact
           = component('button.primary', mods: ['large', 'block'],
                                         type: 'submit') do
-            = "Anmelden"
+            = "Anmelden mit ZHdK-Login"
 
   - external_login_form = capture_haml do
     %form
@@ -25,7 +25,7 @@
             %br/
             mehr Inhalte zugreifen.
           = component('button.primary', mods: ['large', 'block'], href: '/login') do
-            = "Anmelden"
+            = "Anmelden mit System-Login"
 
   :ruby
     home_claim = {

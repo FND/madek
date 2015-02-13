@@ -1,13 +1,14 @@
 :ruby
+  semver = '3.0.0.pre0' # TODO: semver
   footer = {
     copy: {
       logo: {
         href: 'http://madek.zhdk.ch',
-        content: component('icon.madek', 'ui-footer-logo')
+        # content: component('icon.madek', 'ui-footer-logo')
+        content: "Madek"
       },
-      text: 'Zürcher Hochschule der Künste and contributors'
-    },
-    version: 'TODO: semver'
+      text: "#{semver}. Zürcher Hochschule der Künste and contributors"
+    }
   }
 
 - content_for(:body) do
@@ -23,5 +24,6 @@
 
       .app-footer-push
   = combo('footer', footer)
+  -# = javascript_include_tag 'madek-ujs' # init
 
 = render template: 'layouts/_base'
