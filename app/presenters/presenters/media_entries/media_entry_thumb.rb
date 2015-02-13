@@ -2,8 +2,12 @@ module Presenters
   module MediaEntries
     class MediaEntryThumb < Presenters::Shared::Resources::ResourcesThumb
 
-      def image_url(size)
-        media_entry_image_path(@resource, size)
+      def image_url
+        if @resource.media_file.represantable_as_image?
+          media_entry_image_path(@resource, :small)
+        else
+          generic_thumbnail_url
+        end
       end
 
       def authors

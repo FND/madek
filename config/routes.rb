@@ -4,7 +4,6 @@ MAdeK::Application.routes.draw do
 
   get 'collections', to: 'collections#index'
   get 'collections/:id', to: 'collections#show'
-  get 'collections/:id/images/:size', to: 'collections#image', as: 'collection_image'
 
   get 'filter_sets', to: 'filter_sets#index'
 
