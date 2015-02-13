@@ -53,7 +53,8 @@ MAdeK::Application.routes.draw do
         get :filter_sets
       end
     end
-    root to: 'dashboard#index'
+    resources :filter_sets, only: [:index, :show]
+    root to: 'dashboard#index' 
   end
 
   # STYLEGUIDE #################################################################
