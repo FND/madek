@@ -14,7 +14,7 @@
         thumb: component('thumbnail',
           mods: ['media-entry'], # TODO : type of entry ('video')
           text: get.title,
-          picture: get.image_url('small'), # asset_path('dev_todo.png')
+          picture: get.image_url, # asset_path('dev_todo.png')
           # yes this is *inside* the thumb… workaround hacky CSS :/
           meta: {
             title: 'TODO',
@@ -29,7 +29,7 @@
         thumb: component('thumbnail',
           mods: ['media-set'],
           text: get.title,
-          picture: asset_path('dev_todo.png'), # get.image_url('small')
+          picture: asset_path('dev_todo.png'), # get.image_url
           meta: {
             title: get.title,
             subtitle: 'TODO'
@@ -43,7 +43,7 @@
         thumb: component('thumbnail',
           mods: ['filter-set'], # TODO : type of entry ('video')
           text: get.title,
-          picture: asset_path('dev_todo.png'), # get.image_url('small')
+          picture: asset_path('dev_todo.png'), # get.image_url
           meta: {
             title: get.title,
             subtitle: 'TODO'
